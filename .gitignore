@@ -1,0 +1,10 @@
+# ignore
+Library/
+Logs/
+obj/
+Packages/
+UserSettings/
+.vs/
+One.sln
+.vsconfig
+Assembly-CSharp.csproj
