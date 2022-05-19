@@ -24,8 +24,7 @@ public class TestScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            List<Transform> l = new List<Transform>();
-            Debug.Log(l.Remove(transform));
+            Debug.Log(-2 % 2);
         }
     }
 }

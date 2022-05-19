@@ -19,8 +19,10 @@ public class playerControl : MonoBehaviour
     private Animator animator;
     private Animator weaponAnimator;
     private weaponBase weaponModel;
-    private AnimatorOverrideController animatorOverrideController;
-    private AnimationClipOverrides clipOverrides;
+
+    // 装备
+    private List<Transform> weaponList = new List<Transform>();
+    private int weaponIndex = -1;
 
     // 暂时
     private summonMgr summonMgrModel;
@@ -29,12 +31,11 @@ public class playerControl : MonoBehaviour
     void Start()
     {
         animator = role.GetComponent<Animator>();
-        summonMgrModel = summonMgr.GetComponent<summonMgr>();
-        //animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
-        //animator.runtimeAnimatorController = animatorOverrideController;
 
-        //clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
-        //animatorOverrideController.GetOverrides(clipOverrides);
+        summonMgrModel = summonMgr.GetComponent<summonMgr>();
+        GenerateWeapon("GreenDevil");
+        GenerateWeapon("Changmao");
+        weaponIndex = 0;
     }
 
     // Update is called once per frame
@@ -117,30 +118,12 @@ public class playerControl : MonoBehaviour
         //test
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Object oWeapon = Resources.Load("Prefabs/Weapons/GreenDevil");
-            GameObject oWeaponGameObj = Instantiate(oWeapon) as GameObject;
-            Transform oWeaponTransform = oWeaponGameObj.transform;
-            oWeaponTransform.parent = role;
-            oWeaponTransform.localPosition = new Vector3(0, -0.04f, 0);
-            oWeaponTransform.localScale = new Vector3(1, 1, 0);
-            weapon = oWeaponTransform;
-            weaponModel = weapon.GetComponent<weaponBase>();
-            weaponAnimator = weapon.GetComponent<Animator>();
-            animator.SetBool("bEquip", true);
+            SwitchWeapon(false);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Object oWeapon = Resources.Load("Prefabs/Weapons/Changmao");
-            GameObject oWeaponGameObj = Instantiate(oWeapon) as GameObject;
-            Transform oWeaponTransform = oWeaponGameObj.transform;
-            oWeaponTransform.parent = role;
-            oWeaponTransform.localPosition = new Vector3(0, -0.04f, 0);
-            oWeaponTransform.localScale = new Vector3(1, 1, 0);
-            weapon = oWeaponTransform;
-            weaponModel = weapon.GetComponent<weaponBase>();
-            weaponAnimator = weapon.GetComponent<Animator>();
-            animator.SetBool("bEquip", true);
+            SwitchWeapon(true);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -255,6 +238,39 @@ public class playerControl : MonoBehaviour
     {
         runDir = 0;
         NextPosition = role.position;
+    }
+
+    void SwitchWeapon(bool front)
+    {
+        if (front)
+        {
+            weaponIndex = (weaponIndex + 1) % weaponList.Count;
+        }
+        else
+        {
+            weaponIndex = (weaponIndex + weaponList.Count - 1) % weaponList.Count;
+        }
+        if (weapon)   //上一把武器隐藏
+        {
+            weapon.gameObject.SetActive(false);
+        }
+        weapon = weaponList[weaponIndex];
+        weapon.gameObject.SetActive(true);
+        weaponModel = weapon.GetComponent<weaponBase>();
+        weaponAnimator = weapon.GetComponent<Animator>();
+    }
+
+    void GenerateWeapon(string name)
+    {
+        Object oWeapon = Resources.Load("Prefabs/Weapons/" + name);
+        GameObject oWeaponGameObj = Instantiate(oWeapon) as GameObject;
+        Transform oWeaponTransform = oWeaponGameObj.transform;
+        oWeaponTransform.parent = role;
+        oWeaponTransform.localPosition = new Vector3(0, -0.04f, 0);
+        oWeaponTransform.localScale = new Vector3(1, 1, 0);
+        oWeaponGameObj.SetActive(false);
+        weaponList.Add(oWeaponTransform);
+        animator.SetBool("bEquip", true);
     }
 
     public enum PlayerState
