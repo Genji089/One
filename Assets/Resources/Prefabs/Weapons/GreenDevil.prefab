@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 3681477634602324119}
   - component: {fileID: 5902881490067742160}
   - component: {fileID: 3803776304674296963}
+  - component: {fileID: 348836048012508514}
   m_Layer: 0
   m_Name: GreenDevil
   m_TagString: Untagged
@@ -133,3 +134,23 @@ MonoBehaviour:
   attackCd: 0.2
   attackProduct: {fileID: 2865468686496430174, guid: 7aa0738b9b009a1448cd4cd21823fef8, type: 3}
   muzzle: {fileID: 6408155878423398587}
+--- !u!95 &348836048012508514
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8749775122630044486}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 80da41fafd8c7f14d80beaf1487c3eaa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

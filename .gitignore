@@ -5,6 +5,7 @@ obj/
 Packages/
 UserSettings/
 .vs/
+Temp/
 One.sln
 .vsconfig
 Assembly-CSharp.csproj
