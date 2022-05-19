@@ -69,7 +69,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -104,43 +104,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime_0
+      name: slime_0
       rect:
         serializedVersion: 2
-        x: 36
-        y: 246
-        width: 90
-        height: 60
+        x: 5
+        y: 41
+        width: 17
+        height: 10
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edc269ba15eb94c488cc4bf6ef73443c
-      internalID: 2147196089
+      spriteID: 1a422d35e3159614aa7c905c8e2f6669
+      internalID: -527299887
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_1
+      name: slime_1
       rect:
         serializedVersion: 2
-        x: 30
-        y: 54
-        width: 102
-        height: 60
+        x: 5
+        y: 9
+        width: 17
+        height: 10
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea553c24b78f1da4ca0480a47f1265cc
-      internalID: 1825895638
+      spriteID: c8465156c51066e46a623d1fea87c0e0
+      internalID: -1010274048
       vertices: []
       indices: 
       edges: []
@@ -156,8 +156,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Slime_0: 2147196089
-      Slime_1: 1825895638
+      slime_1: -1010274048
+      slime_0: -527299887
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

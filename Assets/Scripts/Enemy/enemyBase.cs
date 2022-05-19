@@ -18,11 +18,13 @@ public class enemyBase : MonoBehaviour
     private float curHP;
     private float curATK;
     private float curMoveSpeed;
+    private Animator animator;
+    private BoxCollider2D boxCollider2D;
 
     // Use this for initialization
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -45,6 +47,11 @@ public class enemyBase : MonoBehaviour
         curMoveSpeed = moveSpeed;
         transform.position = position;
         transform.localEulerAngles = rotation;
+
+        animator = GetComponent<Animator>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+        animator.SetBool("isDie", false);
+        boxCollider2D.enabled = true;
     }
 
     public bool IsAlive()
@@ -70,9 +77,15 @@ public class enemyBase : MonoBehaviour
         curHP--;
         if (curHP <= 0)
         {
-            bAlive = false;
-            gameObject.SetActive(false);
-            OnEnemyDie?.Invoke(transform);
+            animator.SetBool("isDie", true);
+            boxCollider2D.enabled = false;
         }
+    }
+
+    void OnDieAnimationEnd()
+    {
+        bAlive = false;
+        gameObject.SetActive(false);
+        OnEnemyDie?.Invoke(transform);
     }
 }
