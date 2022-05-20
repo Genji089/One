@@ -43,8 +43,9 @@ public class enemyMgr : MonoBehaviour
             if (generateTimeCount > generateCD)
             {
                 float x = Random.Range(playerPos.x - generateRadius, playerPos.x + generateRadius);
-                float y = Mathf.Sqrt(Mathf.Pow(generateRadius, 2) - Mathf.Pow(x - playerPos.x, 2)) + playerPos.y;
-                y *= Random.Range(0, 1f) <= 0.5f ? -1 : 1;
+                float temp = Mathf.Sqrt(Mathf.Pow(generateRadius, 2) - Mathf.Pow(x - playerPos.x, 2));
+                temp *= Random.Range(0, 1f) <= 0.5f ? -1 : 1;
+                float y = temp + playerPos.y;
 
                 //float x = Random.Range(playerPos.x - generateRadius / 2, playerPos.x + generateRadius / 2);
                 //float y = x * Mathf.Sin(Random.Range(0, 360) * Mathf.Deg2Rad);

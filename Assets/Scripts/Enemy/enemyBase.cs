@@ -5,6 +5,9 @@ using System.Collections;
 public class enemyBase : MonoBehaviour
 {
     #region Inspector
+    [Header("Audio")]
+    public AudioClip dieAudio;
+
     [Header("Default Attributes")]
     public float HP;
     public float ATK;
@@ -14,6 +17,7 @@ public class enemyBase : MonoBehaviour
     public delegate void EnemyDieDelegate(Transform enemy);
     public EnemyDieDelegate OnEnemyDie;
 
+    protected enemyState state = enemyState.chase;
     private bool bAlive;
     private float curHP;
     private float curATK;
@@ -35,11 +39,23 @@ public class enemyBase : MonoBehaviour
 
     public virtual void UpdateLogic(Vector3 playerPos)
     {
-        transform.position = Vector3.MoveTowards(transform.position, playerPos, curMoveSpeed * Time.deltaTime);
+        if (state == enemyState.chase)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, playerPos, curMoveSpeed * Time.deltaTime);
+        }
+        else if (state == enemyState.beAttacked)
+        {
+
+        }
+        else if (state == enemyState.dying)
+        {
+
+        }
     }
 
     public void Init(Vector3 position, Vector3 rotation)
     {
+        state = enemyState.chase;
         bAlive = true;
         gameObject.SetActive(true);
         curHP = HP;
@@ -59,9 +75,26 @@ public class enemyBase : MonoBehaviour
         return bAlive;
     }
 
-    public void SetAlive(bool bAlive)
+    private void SwitchState(enemyState newState)
     {
-        this.bAlive = bAlive;
+        if (state == newState)
+        {
+            return;
+        }
+
+        state = newState;
+
+        if (newState == enemyState.dying)
+        {
+            OnEnterStateDying();
+        }
+    }
+
+    void OnEnterStateDying()
+    {
+        animator.SetBool("isDie", true);
+        boxCollider2D.enabled = false;
+        audioMgr.instance.PlaySound(dieAudio);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -77,8 +110,7 @@ public class enemyBase : MonoBehaviour
         curHP--;
         if (curHP <= 0)
         {
-            animator.SetBool("isDie", true);
-            boxCollider2D.enabled = false;
+            SwitchState(enemyState.dying);
         }
     }
 
@@ -87,5 +119,12 @@ public class enemyBase : MonoBehaviour
         bAlive = false;
         gameObject.SetActive(false);
         OnEnemyDie?.Invoke(transform);
+    }
+
+    protected enum enemyState
+    {
+        chase,
+        beAttacked,
+        dying,
     }
 }

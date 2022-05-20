@@ -6,6 +6,7 @@ public class summonEye : summonAttackType
 {
     public Transform attackProduct;
     public Transform muzzle;
+    public AudioClip attackAudio;
     public float attackCd;
     public float maxDistanceToPlayer;
 
@@ -35,6 +36,7 @@ public class summonEye : summonAttackType
         {
             // attack
             Instantiate(attackProduct, muzzle.position, transform.rotation);
+            audioMgr.instance.PlaySound(attackAudio);
             attackCdCount = attackCd;
         }
         else

@@ -118,7 +118,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.00063343346, y: 0.0005845539}
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ae9f5e72fa9714b99a2aad6badf308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieAudio: {fileID: 8300000, guid: 9eaeef0a582f3ab4b97ebc5d324f8735, type: 3}
   HP: 2
   ATK: 1
   moveSpeed: 2
@@ -169,4 +170,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
