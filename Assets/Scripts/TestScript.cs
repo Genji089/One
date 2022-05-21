@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
+    public ArrayList arrayList;
     // Start is called before the first frame update
     void Start()
     {
-        
+        arrayList = new ArrayList
+        {
+            1,
+        };
     }
 
     // Update is called once per frame
@@ -26,5 +30,16 @@ public class TestScript : MonoBehaviour
         {
             Debug.Log(-2 % 2);
         }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log(arrayList.Count);
+            AddExtraData(arrayList);
+            Debug.Log(arrayList.Count);
+        }
+    }
+
+    void AddExtraData(ArrayList array)
+    {
+        array.Add(2);
     }
 }

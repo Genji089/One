@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class summonAttackType : summonBase
+public class summonWithVision : summonBase
 {
     protected List<Transform> enemyDiscoveredList = new List<Transform>();
 

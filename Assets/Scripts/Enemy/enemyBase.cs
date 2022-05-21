@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 public class enemyBase : MonoBehaviour
 {
@@ -25,6 +25,15 @@ public class enemyBase : MonoBehaviour
     private Animator animator;
     private BoxCollider2D boxCollider2D;
 
+    private Vector3 playerPos;
+    private string hitItemType;
+    private ArrayList hitData;
+    private Vector3 hitBackEndPos;
+
+    protected List<string> threateningItems = new List<string>(new string[] {
+        "Bullet",
+    });
+
     // Use this for initialization
     void Start()
     {
@@ -35,22 +44,6 @@ public class enemyBase : MonoBehaviour
     void Update()
     {
 
-    }   
-
-    public virtual void UpdateLogic(Vector3 playerPos)
-    {
-        if (state == enemyState.chase)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, playerPos, curMoveSpeed * Time.deltaTime);
-        }
-        else if (state == enemyState.beAttacked)
-        {
-
-        }
-        else if (state == enemyState.dying)
-        {
-
-        }
     }
 
     public void Init(Vector3 position, Vector3 rotation)
@@ -68,6 +61,42 @@ public class enemyBase : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         animator.SetBool("isDie", false);
         boxCollider2D.enabled = true;
+    }
+
+    public virtual void UpdateLogic(Vector3 playerPos)
+    {
+        this.playerPos = playerPos;
+
+        if (state == enemyState.chase)
+        {
+            ChaseAction();
+        }
+        else if (state == enemyState.beAttacked)
+        {
+            BeAttackedAction();
+        }
+        else if (state == enemyState.dying)
+        {
+
+        }
+    }
+
+    public virtual void ChaseAction()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, playerPos, curMoveSpeed * Time.deltaTime);
+    }
+
+    public virtual void BeAttackedAction()
+    {
+        if (hitItemType == "shotgun")
+        {
+            transform.position = Vector3.MoveTowards(transform.position, hitBackEndPos, (float)hitData[2] * Time.deltaTime);
+        }
+        else
+        {
+            ChaseAction();
+            SwitchState(enemyState.chase);
+        }
     }
 
     public bool IsAlive()
@@ -88,6 +117,15 @@ public class enemyBase : MonoBehaviour
         {
             OnEnterStateDying();
         }
+        else if (newState == enemyState.beAttacked)
+        {
+            if (hitItemType == "shotgun")
+            {
+                float hitBackDistance = (float)hitData[1];
+                hitBackEndPos = transform.position + (transform.position - playerPos).normalized * hitBackDistance;
+                StartCoroutine(WaitHitBackEnd());
+            }
+        }
     }
 
     void OnEnterStateDying()
@@ -99,19 +137,34 @@ public class enemyBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerAttack"))
+        if (threateningItems.Contains(collision.tag))
         {
-            OnBeAttacked();
+            string hitItemType = "";
+            float damage = 1;
+            if (collision.CompareTag("Bullet"))
+            {
+                hitItemType = collision.GetComponent<bulletBase>().bulletType;
+                hitData = collision.GetComponent<bulletBase>().GetHitData();
+                damage = (float)hitData[0];
+            }
+            OnBeAttacked(hitItemType, damage);
         }
     }
 
-    void OnBeAttacked()
+    void OnBeAttacked(string hitItemType, float damage)
     {
-        curHP--;
+        curHP -= damage;
         if (curHP <= 0)
         {
             SwitchState(enemyState.dying);
         }
+        else
+        {
+            this.hitItemType = hitItemType;
+            SwitchState(enemyState.beAttacked);
+        }
+
+        //gameObject.GetComponent<Renderer>().material.SetFloat("_FillPhase", 1f);
     }
 
     void OnDieAnimationEnd()
@@ -119,6 +172,15 @@ public class enemyBase : MonoBehaviour
         bAlive = false;
         gameObject.SetActive(false);
         OnEnemyDie?.Invoke(transform);
+    }
+
+    IEnumerator WaitHitBackEnd()
+    {
+        yield return new WaitUntil(() =>
+        {
+            return transform.position == hitBackEndPos;
+        });
+        SwitchState(enemyState.chase);
     }
 
     protected enum enemyState

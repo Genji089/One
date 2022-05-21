@@ -21,6 +21,7 @@ public class weaponCold : weaponBase
     void OnAttackKeyFrame()
     {
         attackTrigger.enabled = true;
+        audioMgr.instance.PlaySound(attackAudio);
     }
 
     void OnAttackEnd()

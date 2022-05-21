@@ -122,6 +122,7 @@ MonoBehaviour:
   saveWorldRotation: {x: 0, y: 0, z: 0}
   attackCd: 0
   attackProduct: {fileID: 0}
+  attackAudio: {fileID: 8300000, guid: dc580c4460e9ccc4c902fd8b2af15fe2, type: 3}
 --- !u!61 &6290463379686072291
 BoxCollider2D:
   m_ObjectHideFlags: 0

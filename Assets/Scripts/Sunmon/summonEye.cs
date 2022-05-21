@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class summonEye : summonAttackType
+public class summonEye : summonWithVision
 {
     public Transform attackProduct;
     public Transform muzzle;

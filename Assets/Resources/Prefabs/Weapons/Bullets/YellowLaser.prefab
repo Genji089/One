@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -7831994443701714118}
   m_Layer: 0
   m_Name: YellowLaser
-  m_TagString: PlayerAttack
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 15
   aliveTime: 1.5
+  isTriggerDestory: 1
+  bulletType: 
 --- !u!61 &-7831994443701714118
 BoxCollider2D:
   m_ObjectHideFlags: 0

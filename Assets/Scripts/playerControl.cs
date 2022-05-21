@@ -35,6 +35,7 @@ public class playerControl : MonoBehaviour
         summonMgrModel = summonMgr.GetComponent<summonMgr>();
         GenerateWeapon("GreenDevil");
         GenerateWeapon("Changmao");
+        GenerateWeapon("Shotgun");
         weaponIndex = 0;
     }
 

@@ -8,6 +8,7 @@ public class weaponBase : MonoBehaviour
     public Vector3 saveWorldRotation;
     public float attackCd;
     public Transform attackProduct;
+    public AudioClip attackAudio;
 
     #endregion
 

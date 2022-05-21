@@ -6,11 +6,14 @@ public class bulletBase : MonoBehaviour
 {
     public float moveSpeed;
     public float aliveTime;
+    public bool isTriggerDestory;
+    public string bulletType;
+    public float damage = 0;
 
     private float aliveCount;
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
     {
 
     }
@@ -18,7 +21,8 @@ public class bulletBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        AliveCounter();
+        MoveMent();
     }
 
     public virtual void MoveMent()
@@ -40,6 +44,24 @@ public class bulletBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (isTriggerDestory)
+        { 
+            Destroy(gameObject);
+        }
+    }
+
+    public ArrayList GetHitData()
+    {
+        ArrayList arrayList = new ArrayList
+        {
+            damage,
+        };
+        AddHitExtraData(arrayList);
+        return arrayList;
+    }
+
+    protected virtual void AddHitExtraData(ArrayList arrayList)
+    {
+        
     }
 }
