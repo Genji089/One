@@ -29,9 +29,11 @@ public class enemyBase : MonoBehaviour
     private string hitItemType;
     private ArrayList hitData;
     private Vector3 hitBackEndPos;
+    private bool isHitBacking;
 
     protected List<string> threateningItems = new List<string>(new string[] {
         "Bullet",
+        "ColdWeapon",
     });
 
     // Use this for initialization
@@ -90,7 +92,7 @@ public class enemyBase : MonoBehaviour
     {
         if (hitItemType == "shotgun")
         {
-            transform.position = Vector3.MoveTowards(transform.position, hitBackEndPos, (float)hitData[2] * Time.deltaTime);
+            transform.position += (transform.position - playerPos).normalized * (float)hitData[2] * Time.deltaTime;
         }
         else
         {
@@ -121,9 +123,8 @@ public class enemyBase : MonoBehaviour
         {
             if (hitItemType == "shotgun")
             {
-                float hitBackDistance = (float)hitData[1];
-                hitBackEndPos = transform.position + (transform.position - playerPos).normalized * hitBackDistance;
-                StartCoroutine(WaitHitBackEnd());
+                float hitBackTime = (float)hitData[1];
+                StartCoroutine(WaitHitBackEnd(hitBackTime));
             }
         }
     }
@@ -174,12 +175,9 @@ public class enemyBase : MonoBehaviour
         OnEnemyDie?.Invoke(transform);
     }
 
-    IEnumerator WaitHitBackEnd()
+    IEnumerator WaitHitBackEnd(float hitBackTime)
     {
-        yield return new WaitUntil(() =>
-        {
-            return transform.position == hitBackEndPos;
-        });
+        yield return new WaitForSeconds(hitBackTime);
         SwitchState(enemyState.chase);
     }
 

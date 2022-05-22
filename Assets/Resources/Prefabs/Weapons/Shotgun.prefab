@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveWorldRotation: {x: 0, y: 0, z: 0}
-  attackCd: 1
+  attackCd: 1.2
   attackProduct: {fileID: 9079113014458170592, guid: a07479d3b2f807c46b19a488eb8806a5, type: 3}
-  attackAudio: {fileID: 0}
+  attackAudio: {fileID: 8300000, guid: 8a53b7a3914369141ae2834e7939cadf, type: 3}
   muzzle: {fileID: 3963215538772807007}
   fire: {fileID: 1005356804591128836}
   fireDuration: 0

@@ -11,15 +11,19 @@ public class weaponNormal : weaponBase
 
     #endregion
 
-    private float attackCount;
     private bool isFire = false;
     private float fireDurationCount = 0;
+    private bool isAttackReady = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        attackCount = attackCd;
         fire.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        isAttackReady = true;
     }
 
     // Update is called once per frame
@@ -42,16 +46,15 @@ public class weaponNormal : weaponBase
     public override void Attack()
     {
         base.Attack();
-        if (attackCount >= attackCd)
+        if (isAttackReady)
         {
             // do attack
             if (attackProduct)
             {
                 AttackAction();
             }
-            attackCount = 0;
+            StartCoroutine(WaitAttackCD());
         }
-        attackCount += Time.deltaTime;
     }
 
     protected virtual void AttackAction()
@@ -65,9 +68,10 @@ public class weaponNormal : weaponBase
         }
     }
 
-    public override void StopAttack()
+    IEnumerator WaitAttackCD()
     {
-        base.StopAttack();
-        attackCount = attackCd;
+        isAttackReady = false;
+        yield return new WaitForSeconds(attackCd);
+        isAttackReady = true;
     }
 }

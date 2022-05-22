@@ -129,5 +129,6 @@ MonoBehaviour:
   isTriggerDestory: 0
   bulletType: 
   damage: 1
-  hitBackDistance: 2
+  hitBackDistance: 1
   hitBackSpeed: 5
+  hitBackTime: 0.3

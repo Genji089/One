@@ -102,6 +102,7 @@ MonoBehaviour:
   aliveTime: 1.5
   isTriggerDestory: 1
   bulletType: 
+  damage: 1
 --- !u!61 &-6691720419031548188
 BoxCollider2D:
   m_ObjectHideFlags: 0
