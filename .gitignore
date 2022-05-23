@@ -2,10 +2,10 @@
 Library/
 Logs/
 obj/
-Packages/
 UserSettings/
 .vs/
 Temp/
+Build/
 One.sln
 .vsconfig
 Assembly-CSharp.csproj
