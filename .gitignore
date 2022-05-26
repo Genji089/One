@@ -6,6 +6,7 @@ UserSettings/
 .vs/
 Temp/
 Build/
+WebGLBuild/
 One.sln
 .vsconfig
 Assembly-CSharp.csproj

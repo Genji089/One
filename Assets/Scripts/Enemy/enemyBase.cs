@@ -12,6 +12,8 @@ public class enemyBase : MonoBehaviour
     public float HP;
     public float ATK;
     public float moveSpeed;
+
+    public float hitFlashTime;
     #endregion
 
     public delegate void EnemyDieDelegate(Transform enemy);
@@ -121,12 +123,21 @@ public class enemyBase : MonoBehaviour
         }
         else if (newState == enemyState.beAttacked)
         {
+            Change2WhiteTexture(true);
+            StartCoroutine(HitFlash());
+
             if (hitItemType == "shotgun")
             {
                 float hitBackTime = (float)hitData[1];
                 StartCoroutine(WaitHitBackEnd(hitBackTime));
             }
         }
+    }
+
+    private void Change2WhiteTexture(bool is2White)
+    {
+        float v = is2White ? 1 : 0;
+        transform.GetComponent<SpriteRenderer>().material.SetFloat("_AllWhite", v);
     }
 
     void OnEnterStateDying()
@@ -179,6 +190,12 @@ public class enemyBase : MonoBehaviour
     {
         yield return new WaitForSeconds(hitBackTime);
         SwitchState(enemyState.chase);
+    }
+
+    IEnumerator HitFlash()
+    {
+        yield return new WaitForSeconds(hitFlashTime);
+        Change2WhiteTexture(false);
     }
 
     protected enum enemyState
